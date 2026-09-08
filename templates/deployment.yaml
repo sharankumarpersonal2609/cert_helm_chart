@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: certificate-event-publisher
+  namespace: {{ .Values.deployment.namespace }}
+
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+
+  selector:
+    matchLabels:
+      app: certificate-event-publisher
+
+  template:
+    metadata:
+      labels:
+        app: certificate-event-publisher
+
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      automountServiceAccountToken: {{ .Values.serviceAccount.automountServiceAccountToken }}
+
+      containers:
+        - name: publisher
+
+          image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+
+          resources:
+            limits:
+              memory: {{ .Values.deployment.resources.limits.memory }}
+              cpu: {{ .Values.deployment.resources.limits.cpu }}
+            requests:
+              memory: {{ .Values.deployment.resources.requests.memory }}
+              cpu: {{ .Values.deployment.resources.requests.cpu }}
+
+          env:
+            - name: CERT_NAMESPACE
+              value: {{ .Values.deployment.env.CERT_NAMESPACE}}
+
+            - name: CERT_NAME
+              value: {{ .Values.deployment.env.CERT_NAME}}
+
+            - name: CERT_SECRET_NAME
+              value: {{ .Values.deployment.env.CERT_SECRET_NAME}}
+
+            - name: AWS_REGION
+              value: {{ .Values.deployment.env.AWS_REGION}}
+
+            - name: EVENT_BUS_NAME
+              value: {{ .Values.deployment.env.EVENT_BUS_NAME}}
+
+            - name: EVENT_SOURCE
+              value: {{ .Values.deployment.env.EVENT_SOURCE}}
+
+            - name: EVENT_DETAIL_TYPE
+              value: {{ .Values.deployment.env.EVENT_DETAIL_TYPE}}

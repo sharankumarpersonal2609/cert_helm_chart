@@ -1,0 +1,6 @@
+apiVersion: v2
+name: certificate-event-publisher
+description: Helm chart for certificate event publisher
+type: application
+version: 0.1.0
+appVersion: "24.08.26.7"
