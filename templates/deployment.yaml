@@ -36,14 +36,8 @@ spec:
               cpu: {{ .Values.deployment.resources.requests.cpu }}
 
           env:
-            - name: CERT_NAMESPACE
-              value: {{ .Values.deployment.env.CERT_NAMESPACE}}
-
-            - name: CERT_NAMES
-              value: {{ .Values.deployment.env.CERT_NAMES}}
-
-            - name: CERT_SECRET_NAMES
-              value: {{ .Values.deployment.env.CERT_SECRET_NAMES}}
+            - name: CERTIFICATES
+              value: {{ .Values.deployment.env.CERTIFICATES | toJson}}
 
             - name: AWS_REGION
               value: {{ .Values.deployment.env.AWS_REGION}}
