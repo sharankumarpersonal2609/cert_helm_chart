@@ -39,7 +39,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name:  {{ .Values.rbac.restart.rolebinding.name }}
+  name:  {{ .Values.rbac.restart.roleBinding.name }}
   namespace: {{ .Values.rbac.restart.namespace }}
 subjects:
   - kind: ServiceAccount
